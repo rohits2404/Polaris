@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { ClerkProvider } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
+import Providers from "@/components/providers";
 
 const inter = Inter({
     variable: "--font-inter",
@@ -27,23 +25,14 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <ClerkProvider
-        appearance={dark}
-        >
             <html lang="en" suppressHydrationWarning>
                 <body
                 className={`${inter.variable} ${plexMono.variable} antialiased`}
                 >
-                    <ThemeProvider
-                    attribute="class"
-                    defaultTheme="light"
-                    enableSystem
-                    disableTransitionOnChange
-                    >
+                    <Providers>
                         {children}
-                    </ThemeProvider>
+                    </Providers>
                 </body>
             </html>
-        </ClerkProvider>
     );
 }
