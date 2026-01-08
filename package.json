@@ -12,6 +12,7 @@
         "@ai-sdk/google": "^3.0.6",
         "@clerk/nextjs": "^6.36.6",
         "@clerk/themes": "^2.4.47",
+        "@mendable/firecrawl-js": "^4.10.0",
         "@radix-ui/react-separator": "^1.1.8",
         "@radix-ui/react-slot": "^1.2.4",
         "ai": "^6.0.22",
