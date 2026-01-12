@@ -37,3 +37,41 @@ export const get = query({
         return await ctx.db.query("projects").withIndex("by_owner", (q) => q.eq("ownerId", identity.subject)).order("desc").collect()
     }
 })
+
+export const getById = query({
+    args: {
+        id: v.id("projects")
+    },
+    handler: async (ctx,args) => {
+        const identity = await verifyAuth(ctx)
+        const project = await ctx.db.get("projects", args.id)
+        if(!project) {
+            throw new Error("Project Not Found!")
+        }
+        if(project.ownerId !== identity.subject) {
+            throw new Error("Unauthorized Access to this Project!")
+        }
+        return project;
+    }
+})
+
+export const rename = mutation({
+    args: {
+        id: v.id("projects"),
+        name: v.string()
+    },
+    handler: async (ctx,args) => {
+        const identity = await verifyAuth(ctx)
+        const project = await ctx.db.get("projects", args.id)
+        if(!project) {
+            throw new Error("Project Not Found!")
+        }
+        if(project.ownerId !== identity.subject) {
+            throw new Error("Unauthorized Access to this Project!")
+        }
+        await ctx.db.patch("projects", args.id, {
+            name: args.name,
+            updatedAt: Date.now()
+        })
+    }
+})
