@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { Providers } from "@/components/provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const inter = Inter({
     subsets:['latin'],
-    variable:'--font-sans'
+    variable:'--font-inter'
 });
 
 const plexMono = IBM_Plex_Mono({
@@ -30,11 +30,12 @@ export default function RootLayout({
         <html
         suppressHydrationWarning
         lang="en"
-        className={cn("h-full", "antialiased", inter.variable, plexMono.variable, "font-sans")}
         >
-            <body className="min-h-full flex flex-col">
+            <body className={`${inter.variable} ${plexMono.variable} antialiased`}>
                 <Providers>
-                    {children}
+                    <TooltipProvider>
+                        {children}
+                    </TooltipProvider>
                     <Toaster/>
                 </Providers>
             </body>
